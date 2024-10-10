@@ -1,6 +1,19 @@
 import type { Metadata } from "next";
+import { Space_Mono, Work_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+
+const space = Space_Mono({
+    weight: "400",
+    subsets: ['latin'],
+    display: "swap"
+});
+
+const work = Work_Sans({
+    weight: "400",
+    subsets: ['latin'],
+    display: "swap"
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${work.className} ${space.className} antialiased`}
       >
         {children}
       </body>
