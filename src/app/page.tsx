@@ -1,35 +1,23 @@
-import { Cover } from "@/components/cover";
-import { TypewriterEffectSmooth } from "@/components/typewriter";
+import { Space_Mono, Work_Sans } from "next/font/google";
+
+const space = Space_Mono({
+  weight: "400",
+  subsets: ['latin'],
+  display: "swap"
+});
+
+const work = Work_Sans({
+  subsets: ['latin'],
+  display: "swap"
+});
 
 export default function Home() {
-
-  const words = [
-    {
-      text: "Hello,"
-    },
-    {
-      text: "I am"
-    },
-    {
-      text: "Anirudh",
-      className: "text-blue-500 dark:text-blue-500"
-    },
-    {
-      text: "Sridhar",
-      className: "text-blue-500 dark:text-blue-500"
-    }
-  ];
-
   return (
-    <main>
-      <Cover className = "text-xl font-bold">
-        This is a Next.js project with Tailwind CSS and TypeScript. It includes
-        a custom ESLint configuration and Prettier setup. It also includes a
-        custom Jest configuration with React Testing Library and a GitHub
-        Actions workflow for continuous integration.
-      </Cover>
-
-      <TypewriterEffectSmooth words= {words} />
+    <main className="min-h-screen w-screen">
+      <section className="text-3xl font-medium text-[var(--fg)] p-10">
+        <span className={work.className}>Hi I am Anirudh Sridhar.</span> <br />
+        <p className={space.className}><span className="text-lg">This my lil website.</span></p>
+      </section>
     </main>
   );
 }

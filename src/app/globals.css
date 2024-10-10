@@ -9,8 +9,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #fbf1c7;
+    --foreground: #ffffff;
+    --red: #cc241d;
+    --green: #98971a;
+    --yellow: #d79921;
+    --blue: #458588;
+    --purple: #b16286;
+    --aqua: #689d6a;
+    --gray: #7c6f64;
+    --fg: #3c3836;
   }
 }
 
@@ -24,4 +32,8 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+* {
+  scroll-behavior: smooth;
 }
