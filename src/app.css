@@ -2,7 +2,7 @@
 
 @tailwind base;
 @tailwind components;
-@tailwind utility;
+@tailwind utilities;
 
 :root {
 	--font-body: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
