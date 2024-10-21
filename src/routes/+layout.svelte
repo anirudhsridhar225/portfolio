@@ -1,6 +1,6 @@
 <script>
 	import '../app.css';
-	import Header from './Header.svelte';
+	import Header from '../lib/components/Header.svelte';
 </script>
 
 <div class="bg-[#FBF1C7] min-h-screen min-w-screen">
