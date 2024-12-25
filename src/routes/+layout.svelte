@@ -3,14 +3,10 @@
 	import Header from './Header.svelte';
 </script>
 
-<div class="bg-[#E5DFC5] min-h-screen">
+<div class="bg-[#E5DFC5] min-h-screen min-w-screen">
 	<Header />
 
-	<main>
+	<main class="h-[90vh] w-full flex items-center justify-center">
 		<slot />
 	</main>
-
-	<footer class="w-full text-center bg-[#B9C0AB] p-4">
-		<p class=" text-xl font-semibold">(somehow) made by andy</p>
-	</footer>
 </div>
