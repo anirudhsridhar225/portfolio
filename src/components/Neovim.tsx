@@ -1,14 +1,16 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Neovim() {
     const [text, setText] = useState<string>('')
     const [currentLine, setCurrentLine] = useState<number>(1) // Start at line 1
     const [cursorPosition, setCursorPosition] = useState<number>(0)
+    const [inputMode, setInputMode] = useState<boolean>(false)
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const lineCountRef = useRef<HTMLDivElement>(null)
-
-    const minLines = 35 // Set a minimum number of lines to display
+    const lineHeight = '1.5rem'
+    const minLines = 33
     
     // Calculate actual line count from text or use minimum
     const textLineCount = text.split('\n').length
@@ -62,6 +64,7 @@ export default function Neovim() {
     }
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+        if (!inputMode) return // Ignore text changes if not in input mode
         const newText = e.target.value
         setText(newText)
         
@@ -73,6 +76,16 @@ export default function Neovim() {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
         const textarea = textAreaRef.current
         if (!textarea) return
+
+        if (e.key === 'i') {
+            setInputMode(true)
+            return
+        }
+
+        if (!inputMode) {
+            e.preventDefault()
+            return
+        }
         
         // Current content as array of lines
         const lines = text.split('\n')
@@ -108,17 +121,17 @@ export default function Neovim() {
                 setCurrentLine(newLineNumber)
             }, 0)
         }
+        else if (e.key === 'b') {
+            setCurrentLine(1)
+        }
     }
 
-    // Calculate line heights to match textarea (helps with alignment)
-    const lineHeight = '1.5rem'
-
     return (
-        <div className="flex h-full bg-gray-900 text-gray-200">
+        <div className="flex h-full w-full text-gray-200">
             {/* Line numbers */}
             <div 
                 ref={lineCountRef} 
-                className="p-2 text-right select-none overflow-hidden h-full bg-gray-800 w-12"
+                className="p-2 text-right select-none overflow-hidden h-full w-10"
                 style={{ lineHeight }}
             >
                 {Array.from({ length: lineCount }, (_, i) => i + 1).map((num) => (
@@ -135,14 +148,14 @@ export default function Neovim() {
             {/* Editor area */}
             <div className="relative flex-grow">
                 {/* Highlight current line */}
-                <div 
+                {/* <div 
                     className="absolute pointer-events-none w-full"
                     style={{ 
-                        top: `${(currentLine - 1) * parseFloat(lineHeight)}px`,
+                        top: `${(currentLine - 1) * parseFloat(lineHeight + 1)}px`,
                         height: lineHeight,
                         backgroundColor: 'rgba(55, 65, 81, 0.5)'
                     }}
-                />
+                /> */}
                 
                 {/* Textarea */}
                 <textarea
