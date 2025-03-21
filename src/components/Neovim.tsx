@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import { useRouter } from 'next/router'
 
 export default function Neovim() {
     const [text, setText] = useState<string>('')
@@ -9,8 +8,9 @@ export default function Neovim() {
     const [inputMode, setInputMode] = useState<boolean>(false)
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const lineCountRef = useRef<HTMLDivElement>(null)
+    const cursorRef  = useRef<HTMLDivElement>(null)
     const lineHeight = '1.5rem'
-    const minLines = 33
+    const minLines = 50
     
     // Calculate actual line count from text or use minimum
     const textLineCount = text.split('\n').length
@@ -41,7 +41,7 @@ export default function Neovim() {
 
     // Ensure cursor is visible in the correct position even when navigating empty lines
     useEffect(() => {
-        if (textAreaRef.current) {
+        if (textAreaRef.current && cursorRef.current) {
             const textarea = textAreaRef.current
             
             // Set cursor position
@@ -49,8 +49,30 @@ export default function Neovim() {
             
             // Focus the textarea 
             textarea.focus()
+
+            //Calc position for custom cursor display
+            const textBeforeCursor = text.substring(0, cursorPosition)
+            const lines = textBeforeCursor.split('\n')
+            const currentLineNumber = lines.length - 1
+            const currentLineContent = lines[lines.length - 1]
+
+            // Get font metrics from textarea
+            const computedStyle = window.getComputedStyle(textarea)
+            const fontSize = parseFloat(computedStyle.fontSize)
+            const paddingLeft = parseFloat(computedStyle.paddingLeft)
+            const paddingTop = parseFloat(computedStyle.paddingTop)
+            
+            // Calculate cursor position (approximation)
+            // This approximation assumes monospace font where each character has equal width
+            const charWidth = fontSize * 0.6 // Approximation for monospace font
+            const xPos = currentLineContent.length * charWidth + paddingLeft
+            const yPos = currentLineNumber * parseFloat(lineHeight) + paddingTop
+            
+            // Position the cursor element
+            cursorRef.current.style.left = `${xPos}px`
+            cursorRef.current.style.top = `${yPos}px`
         }
-    }, [cursorPosition])
+    }, [cursorPosition, text, inputMode])
 
     const handleCursorChange = (e: React.SyntheticEvent<HTMLTextAreaElement>): void => {
         const target = e.target as HTMLTextAreaElement
@@ -77,14 +99,20 @@ export default function Neovim() {
         const textarea = textAreaRef.current
         if (!textarea) return
 
-        if (e.key === 'i') {
+        if (e.key === 'Escape' && inputMode) {
+            e.preventDefault()
+            setInputMode(false)
+            return
+        }
+
+        if (e.key === 'i' && !inputMode) {
+            e.preventDefault()
             setInputMode(true)
             return
         }
 
         if (!inputMode) {
-            e.preventDefault()
-            return
+            if ()
         }
         
         // Current content as array of lines
