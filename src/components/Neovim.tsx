@@ -8,14 +8,14 @@ export default function Neovim() {
     const [inputMode, setInputMode] = useState<boolean>(false)
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const lineCountRef = useRef<HTMLDivElement>(null)
-    const cursorRef  = useRef<HTMLDivElement>(null)
+    const cursorRef = useRef<HTMLDivElement>(null)
     const lineHeight = '1.5rem'
     const minLines = 50
-    
+
     // Calculate actual line count from text or use minimum
     const textLineCount = text.split('\n').length
     const lineCount = Math.max(minLines, textLineCount)
-    
+
     // Create an array of lines (pad with empty lines if needed)
     const lines = text.split('\n')
     while (lines.length < minLines) {
@@ -43,10 +43,10 @@ export default function Neovim() {
     useEffect(() => {
         if (textAreaRef.current && cursorRef.current) {
             const textarea = textAreaRef.current
-            
+
             // Set cursor position
             textarea.setSelectionRange(cursorPosition, cursorPosition)
-            
+
             // Focus the textarea 
             textarea.focus()
 
@@ -61,13 +61,19 @@ export default function Neovim() {
             const fontSize = parseFloat(computedStyle.fontSize)
             const paddingLeft = parseFloat(computedStyle.paddingLeft)
             const paddingTop = parseFloat(computedStyle.paddingTop)
-            
+
             // Calculate cursor position (approximation)
             // This approximation assumes monospace font where each character has equal width
             const charWidth = fontSize * 0.6 // Approximation for monospace font
-            const xPos = currentLineContent.length * charWidth + paddingLeft
-            const yPos = currentLineNumber * parseFloat(lineHeight) + paddingTop
-            
+            const cursorWidth = inputMode ? 1 : 10
+            const xPos = currentLineContent.length * charWidth + paddingLeft - (inputMode ? 0 : cursorWidth)
+
+            const lineHeightPx = lineHeight.endsWith('rem') ?
+                parseFloat(lineHeight) * 16 :
+                parseFloat(lineHeight)
+
+            const yPos = currentLineNumber * lineHeightPx + paddingTop
+
             // Position the cursor element
             cursorRef.current.style.left = `${xPos}px`
             cursorRef.current.style.top = `${yPos}px`
@@ -78,7 +84,7 @@ export default function Neovim() {
         const target = e.target as HTMLTextAreaElement
         const pos = target.selectionStart
         setCursorPosition(pos)
-        
+
         // Calculate current line
         const textBeforeCursor = text.substring(0, pos)
         const line = (textBeforeCursor.match(/\n/g) || []).length + 1
@@ -89,7 +95,7 @@ export default function Neovim() {
         if (!inputMode) return // Ignore text changes if not in input mode
         const newText = e.target.value
         setText(newText)
-        
+
         // Update cursor position
         setCursorPosition(e.target.selectionStart)
     }
@@ -111,35 +117,32 @@ export default function Neovim() {
             return
         }
 
-        if (!inputMode) {
-            if ()
-        }
-        
         // Current content as array of lines
         const lines = text.split('\n')
-        
+
         // Get current line and column based on cursor position
         const textBeforeCursor = text.substring(0, cursorPosition)
         const currentLineNumber = (textBeforeCursor.match(/\n/g) || []).length
         const lineStartPos = textBeforeCursor.lastIndexOf('\n') + 1
         const currentColumn = cursorPosition - lineStartPos
-        
+
+        console.log(lines, currentColumn);
         // Handle arrow key navigation through empty lines below text content
         if (e.key === 'ArrowDown' && currentLineNumber + 1 >= textLineCount && currentLineNumber + 1 < minLines) {
             e.preventDefault()
-            
+
             // Calculate position for moving down one line
             // If we're on the last text line, append a newline
             if (currentLineNumber + 1 === textLineCount && textLineCount < minLines) {
                 const newText = text + '\n'
                 setText(newText)
-                
+
                 // Position cursor at the beginning of the new line
                 const newPos = text.length + 1
                 setCursorPosition(newPos)
                 setCurrentLine(currentLineNumber + 2)
             }
-        } 
+        }
         else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
             // Let the normal behavior handle navigation within text content
             // But update our state afterwards
@@ -157,34 +160,48 @@ export default function Neovim() {
     return (
         <div className="flex h-full w-full text-gray-200">
             {/* Line numbers */}
-            <div 
-                ref={lineCountRef} 
+            <div
+                ref={lineCountRef}
                 className="p-2 text-right select-none overflow-hidden h-full w-10"
                 style={{ lineHeight }}
             >
                 {Array.from({ length: lineCount }, (_, i) => i + 1).map((num) => (
-                    <div 
-                        key={num} 
+                    <div
+                        key={num}
                         className={`${num === currentLine ? 'text-white font-bold' : 'text-gray-500'}`}
-                        style={{ height: lineHeight }}
+                        style={{
+                            height: lineHeight,
+                            borderTop: '1px solid white',
+                            borderBottom: '1px solid white'
+                        }}
                     >
                         {num}
                     </div>
                 ))}
             </div>
-            
+
             {/* Editor area */}
             <div className="relative flex-grow">
                 {/* Highlight current line */}
-                {/* <div 
+                {/* <div
                     className="absolute pointer-events-none w-full"
-                    style={{ 
-                        top: `${(currentLine - 1) * parseFloat(lineHeight + 1)}px`,
+                    style={{
+                        top: `${(currentLine - 1) * parseFloat(lineHeight)}px`,
                         height: lineHeight,
                         backgroundColor: 'rgba(55, 65, 81, 0.5)'
                     }}
                 /> */}
-                
+
+                <div
+                    ref={cursorRef}
+                    className='absolute bg-white opacity-30'
+                    style={{
+                        height: lineHeight,
+                        width: inputMode ? '1px' : '10px',
+                        transition: 'width 0.1s ease-in-out',
+                    }}
+                ></div>
+
                 {/* Textarea */}
                 <textarea
                     ref={textAreaRef}
@@ -197,7 +214,7 @@ export default function Neovim() {
                         lineHeight,
                         whiteSpace: 'pre-wrap',
                         overflowWrap: 'break-word',
-                        caretColor: 'white'
+                        caretColor: 'transparent',
                     }}
                     spellCheck={false}
                 />
