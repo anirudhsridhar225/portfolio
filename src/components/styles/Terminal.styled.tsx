@@ -35,7 +35,7 @@ export const Input = styled.span`
 `
 
 export const DirName = styled.span`
-    color: rgb(32,33,37);
+    color: rgb(69,71,88);
     background: rgb(146,179,244);
     font-size: 16px;
     padding-left: 1.25rem;
@@ -51,7 +51,6 @@ export const DirName = styled.span`
     line-height: 1rem;
     margin-right: 0.5rem;
     
-    /* Create the arrowhead shape */
     &:after {
         content: '';
         position: absolute;
