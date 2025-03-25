@@ -15,6 +15,7 @@ export const InputLine = styled.div`
     display: flex-grow;
     align-items: center;
     font-family: monospace;
+    margin-right: 0.75rem;
 `
 
 export const Prompt = styled.span`
