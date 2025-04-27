@@ -1,0 +1,15 @@
+html {
+	scroll-behaviour: smooth;
+}
+
+body {
+	background: linear-gradient(195deg, #ff00c3, #d123ba, #a42dab, #7b2f97, #552b80, #342465, #181a48, #050b2b);
+}
+
+h1 {
+	color: white;
+}
+
+p {
+	color: #4863A0;
+}
