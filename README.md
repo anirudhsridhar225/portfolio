@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chiri 🌸
+
+![screenshot-light](public/screenshots/screenshot-light.png)
+![screenshot-dark](public/screenshots/screenshot-dark.png)
+
+Chiri is a minimal blog theme built with [Astro](https://astro.build), offering customization options while preserving its clean aesthetic.
+
+Check the [demo](https://astro-chiri.netlify.app/) for more details.
+
+## Features
+
+- Built with Astro
+- Responsive
+- Light / Dark mode
+- MDX
+- KaTeX
+- Sitemap
+- OpenGraph
+- RSS
+- ...
 
 ## Getting Started
 
-First, run the development server:
+1. [Fork](https://github.com/the3ash/astro-chiri/fork) this repository, or use this template to [create a new repository](https://github.com/new?template_name=astro-chiri&template_owner=the3ash).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Run the following commands:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```bash
+   git clone <your-repo-url>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   cd <your-repo-name>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   pnpm install
 
-## Learn More
+   pnpm dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Edit `src/config.ts` and `src/content/about/about.md` to your liking.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Use `pnpm new <title>` to create new posts, or add your posts to `src/content/posts`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+5. You need to set adapter as follows before deploying to Netlify, Vercel, or other platforms, but you can set `linkCard` to `false` in `src/config.ts` to skip this step:
+   - **Netlify**: `pnpm add @astrojs/netlify` and add `adapter: netlify()` in `astro.config.ts`.
+   - **Vercel**: `pnpm add @astrojs/vercel` and add `adapter: vercel()` in `astro.config.ts`.
+   - **Cloudflare Pages**: `pnpm add @astrojs/cloudflare` and add `adapter: cloudflare()` in `astro.config.ts`.
+   - **Static (e.g. GitHub Pages)**: `pnpm add @astrojs/static` and add `adapter: static()` in `astro.config.ts`.
+   - Refer to [Astro Deployment Guides](https://docs.astro.build/en/guides/deploy/) for more details.
 
-## Deploy on Vercel
+&emsp;[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start) [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/new) [![Deploy to Cloudflare Pages](https://deploy.workers.cloudflare.com/button)](https://pages.cloudflare.com/start)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Commands
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `pnpm new <title>` - Create a new post (use `_title` for drafts)
+- `pnpm update-theme` - Update the theme to the latest version
+
+## References
+
+- https://paco.me/
+- https://benji.org/
+- https://shud.in/
+- https://retypeset.radishzz.cc/
+
+## License
+
+MIT
