@@ -7,10 +7,15 @@ This content will be displayed at the top of the index page.
 You can leave this empty if you don’t want to show any content.
 -->
 
-A static blog theme based on [Astro](https://astro.build), designed for clarity and focus.
+hej! i am andy, i make websites and some other stuff
 
-With a deliberately minimal design, this layout ensures your content takes center stage. It's built for flexibility, offering customization options that honor its clean and elegant aesthetic.
+you can check my projects out at [my github](https://github.com/anirudhsridhar225)
 
-Effortlessly share your thoughts in _a calm & dustless space._
+big fan of *video games*, *music* and *sports* (spa p3 leclerc my goat)
 
-Check posts for details and view source on [GitHub](https://github.com/the3ash/astro-chiri).
+you can contact me at:
+- [my linkedin](https://www.linkedin.com/in/anirudh-sridhar-07bb02298/)
+- [my email](mailto:anirudhsridhar1064@gmail.com)
+- [my contact number](https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1&ab_channel=RickAstley)
+
+for your perusal, here's [my resume](https://shorturl.at/QJ5cz)
